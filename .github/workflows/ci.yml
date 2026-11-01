@@ -1,0 +1,59 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ninja-build clang libleveldb-dev libsqlite3-dev
+      - name: Install tools (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ninja leveldb
+      - name: Build
+        env:
+          CXX: clang++
+        run: make build CMAKE_FLAGS="-DSEDIMENT_WERROR=ON"
+      - name: Unit, model and crash-recovery tests
+        run: ctest --test-dir build --output-on-failure -j4
+      - name: db_bench smoke test
+        run: ./build/db_bench --num=20000 --db=/tmp/smoke
+
+  sanitizers:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sanitizer: [address-undefined, thread]
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y ninja-build clang
+      - run: sudo sysctl vm.mmap_rnd_bits=28
+      - name: Build
+        env:
+          CXX: clang++
+        run: |
+          SAN=$(echo ${{ matrix.sanitizer }} | tr - ,)
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DSEDIMENT_SANITIZE=$SAN -DSEDIMENT_BUILD_BENCH=OFF
+          cmake --build build -j4
+      - name: Test
+        env:
+          UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+        run: ./build/sediment_tests
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: make lint
