@@ -10,7 +10,7 @@ An embeddable, crash-safe LSM-tree key-value store in C++20. It has a write-ahea
 
 ## Why this exists
 
-LSM trees sit under RocksDB, Cassandra, CockroachDB and most modern storage engines, but production code bases are hundreds of thousands of lines. sedimentdb covers the full core design in about 2,700 lines that read top to bottom: WAL, memtable, SSTables, MANIFEST, compaction and snapshots. It treats crash safety as the hard requirement. Every write acknowledged with `sync=true` has to survive a `SIGKILL` at any moment, including mid-compaction, and a test harness checks exactly that on every CI run. On an M5 Pro it performs roughly on par with LevelDB, and is faster on lookups of keys that don't exist.
+LSM trees sit under RocksDB, Cassandra, CockroachDB and most modern storage engines, but production code bases are hundreds of thousands of lines. sedimentdb covers the full core design in about 2,700 lines that read top to bottom: WAL, memtable, SSTables, MANIFEST, compaction and snapshots. It treats crash safety as the hard requirement. Every write acknowledged with `sync=true` has to survive a `SIGKILL` at any moment, including mid-compaction, and a test harness checks exactly that on every CI run. On an M5 Pro it is within 15% of LevelDB on writes and point reads, and 1.9x faster on lookups of keys that don't exist.
 
 ## Highlights
 
@@ -102,27 +102,27 @@ Every engine is used through its normal per-operation API.
 
 | Workload | sedimentdb | LevelDB 1.23 | SQLite 3.54 | sedimentdb / LevelDB |
 |---|---:|---:|---:|---:|
-| fillseq (ops/s) | 204,449 | 242,809 | 93,792 | 0.84x |
-| fillrandom | 162,172 | 173,328 | 49,885 | 0.94x |
-| overwrite | 138,492 | 149,752 | 61,985 | 0.92x |
-| readrandom (existing keys) | 898,292 | 888,730 | 204,884 | 1.01x |
-| readmissing (absent keys) | 3,366,921 | 1,792,842 | 204,579 | **1.88x** |
-| readseq (full scan) | 17,744,235 | 34,235,243 | 16,016,946 | 0.52x |
-| fillsync (1,000 sync writes) | 325 | 329 | 1,365 | 0.99x |
+| fillseq (ops/s) | 205,514 | 241,677 | 94,553 | 0.85x |
+| fillrandom | 165,148 | 176,462 | 50,185 | 0.94x |
+| overwrite | 141,598 | 150,400 | 63,720 | 0.94x |
+| readrandom (existing keys) | 905,732 | 954,730 | 215,375 | 0.95x |
+| readmissing (absent keys) | 3,455,743 | 1,833,228 | 216,718 | **1.89x** |
+| readseq (full scan) | 17,537,437 | 33,962,825 | 16,716,957 | 0.52x |
+| fillsync (1,000 sync writes) | 326 | 324 | 1,546 | 1.01x |
 
 **How to read this:**
 
-- **Writes are within 6–16% of LevelDB.** LevelDB's write path has had 15 years of tuning; sedimentdb spends a little more per insert, for example by building each memtable entry in a temporary string before copying it into the arena.
-- **Point reads are at parity.** **Reads of absent keys are 1.88x faster.** sedimentdb keeps one bloom filter per table that is consulted before touching the index, while LevelDB consults per-2 KB-block filters after an index lookup.
+- **Writes are within 6–15% of LevelDB.** LevelDB's write path has had 15 years of tuning; sedimentdb spends a little more per insert, for example by building each memtable entry in a temporary string before copying it into the arena.
+- **Point reads are within 5% of LevelDB, and reads of absent keys are 1.89x faster.** sedimentdb keeps one bloom filter per table that is consulted before touching the index, while LevelDB consults per-2 KB-block filters after an index lookup.
 - **Full scans are 0.52x.** Each step passes through five virtual iterator layers (DB → merge → level → table → block). Returning views instead of copies and a heap-based merge already gave a large improvement during development. Flattening the iterator stack is the main item on the roadmap.
-- **Sync writes are bound by the disk flush.** Both LevelDB and sedimentdb issue one `F_FULLFSYNC` per write, which forces the SSD's cache to stable storage and takes about 3 ms here. SQLite commits about 4x faster. Its 0.73 ms per commit is consistent with a plain `fsync`, which on macOS does not flush the drive cache. That is an inference from the timings that we have not verified by tracing, but it means SQLite's number may reflect a weaker durability guarantee rather than a faster engine.
+- **Sync writes are bound by the disk flush.** Both LevelDB and sedimentdb issue one `F_FULLFSYNC` per write, which forces the SSD's cache to stable storage and takes about 3 ms here. SQLite commits about 4.7x faster. Its 0.65 ms per commit is consistent with a plain `fsync`, which on macOS does not flush the drive cache. That is an inference from the timings that we have not verified by tracing, but it means SQLite's number may reflect a weaker durability guarantee rather than a faster engine.
 
 **Limitations:** these are single-threaded, warm-OS-cache runs with 1M keys, where the working set fits in memory. Datasets larger than RAM, concurrent workloads and compression were not measured.
 
 ## Design decisions and trade-offs
 
 - **mmap instead of a block cache.** It is simple and fast when data fits in memory, and lets the OS manage caching. The cost is that there is no control over eviction, and an I/O error appears as a `SIGBUS` rather than a status. LevelDB's explicit cache handles larger-than-memory data more predictably.
-- **One bloom filter per table instead of per block.** This makes negative lookups cheaper (no index probe) at the cost of memory proportional to the table size. It is the source of the 1.88x on `readmissing`.
+- **One bloom filter per table instead of per block.** This makes negative lookups cheaper (no index probe) at the cost of memory proportional to the table size. It is the source of the 1.89x on `readmissing`.
 - **No compression.** It keeps the block format simple, and the benchmark values are incompressible anyway. Snappy or zstd per block would be a small change.
 - **Forward-only iterators.** `Prev()` doubles the iterator surface area, and is not implemented.
 - **One background thread** for both flush and compaction. Flushes take priority, but a long compaction can delay the next flush and cause write stalls under sustained load. LevelDB has the same design; RocksDB adds compaction parallelism.

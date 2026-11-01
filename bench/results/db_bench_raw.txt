@@ -1,108 +1,108 @@
-# 2026-11-01 06:43 Apple M5 Pro, 27.0.1
+# 2026-11-01 07:37 Apple M5 Pro, 27.0.1
 # Apple clang version 21.0.0 (clang-2100.4.1.1); leveldb 1.23_2; sqlite 3.54.0
 # num=1000000 value_size=100 runs=5 db=/tmp/sediment-bench
-run1 sediment   fillseq         1000000 ops     4.938 s      4.938 us/op     202519 ops/s    23.5 MB/s
-run1 sediment   fillrandom      1000000 ops     6.299 s      6.299 us/op     158756 ops/s    18.4 MB/s
-run1 sediment   overwrite       1000000 ops     7.221 s      7.221 us/op     138492 ops/s    16.1 MB/s
-run1 sediment   readrandom      1000000 ops     1.125 s      1.125 us/op     889116 ops/s (1000000 found)
-run1 sediment   readmissing     1000000 ops     0.300 s      0.300 us/op    3331546 ops/s (0 found)
-run1 sediment   readseq         1000000 ops     0.056 s      0.056 us/op   17744235 ops/s
-run1 sediment   fillsync           1000 ops     3.087 s   3086.566 us/op        324 ops/s     0.0 MB/s
-run1 leveldb    fillseq         1000000 ops     4.092 s      4.092 us/op     244350 ops/s    28.3 MB/s
-run1 leveldb    fillrandom      1000000 ops     5.827 s      5.827 us/op     171606 ops/s    19.9 MB/s
-run1 leveldb    overwrite       1000000 ops     7.254 s      7.254 us/op     137848 ops/s    16.0 MB/s
-run1 leveldb    readrandom      1000000 ops     1.221 s      1.221 us/op     819061 ops/s (1000000 found)
-run1 leveldb    readmissing     1000000 ops     0.753 s      0.753 us/op    1328813 ops/s (0 found)
-run1 leveldb    readseq         1000000 ops     0.030 s      0.030 us/op   33010790 ops/s
-run1 leveldb    fillsync           1000 ops     3.031 s   3030.614 us/op        330 ops/s     0.0 MB/s
-run1 sqlite     fillseq         1000000 ops    11.849 s     11.849 us/op      84396 ops/s     9.8 MB/s
-run1 sqlite     fillrandom      1000000 ops    20.757 s     20.757 us/op      48177 ops/s     5.6 MB/s
-run1 sqlite     overwrite       1000000 ops    16.132 s     16.132 us/op      61989 ops/s     7.2 MB/s
-run1 sqlite     readrandom      1000000 ops     6.778 s      6.778 us/op     147526 ops/s (1000000 found)
-run1 sqlite     readmissing     1000000 ops     5.064 s      5.064 us/op     197462 ops/s (0 found)
-run1 sqlite     readseq         1000000 ops     0.065 s      0.065 us/op   15482513 ops/s
-run1 sqlite     fillsync           1000 ops     0.217 s    217.195 us/op       4604 ops/s     0.5 MB/s
-run2 sediment   fillseq         1000000 ops     5.142 s      5.142 us/op     194483 ops/s    22.6 MB/s
-run2 sediment   fillrandom      1000000 ops     6.120 s      6.120 us/op     163406 ops/s    19.0 MB/s
-run2 sediment   overwrite       1000000 ops     7.123 s      7.123 us/op     140387 ops/s    16.3 MB/s
-run2 sediment   readrandom      1000000 ops     1.109 s      1.109 us/op     901423 ops/s (1000000 found)
-run2 sediment   readmissing     1000000 ops     0.291 s      0.291 us/op    3435360 ops/s (0 found)
-run2 sediment   readseq         1000000 ops     0.057 s      0.057 us/op   17420882 ops/s
-run2 sediment   fillsync           1000 ops     3.132 s   3131.570 us/op        319 ops/s     0.0 MB/s
-run2 leveldb    fillseq         1000000 ops     4.118 s      4.118 us/op     242809 ops/s    28.2 MB/s
-run2 leveldb    fillrandom      1000000 ops     5.731 s      5.731 us/op     174495 ops/s    20.2 MB/s
-run2 leveldb    overwrite       1000000 ops     6.678 s      6.678 us/op     149752 ops/s    17.4 MB/s
-run2 leveldb    readrandom      1000000 ops     1.139 s      1.139 us/op     878310 ops/s (1000000 found)
-run2 leveldb    readmissing     1000000 ops     0.560 s      0.560 us/op    1785767 ops/s (0 found)
-run2 leveldb    readseq         1000000 ops     0.029 s      0.029 us/op   34373022 ops/s
-run2 leveldb    fillsync           1000 ops     3.098 s   3097.990 us/op        323 ops/s     0.0 MB/s
-run2 sqlite     fillseq         1000000 ops    11.002 s     11.002 us/op      90894 ops/s    10.5 MB/s
-run2 sqlite     fillrandom      1000000 ops    20.364 s     20.364 us/op      49105 ops/s     5.7 MB/s
-run2 sqlite     overwrite       1000000 ops    16.272 s     16.272 us/op      61456 ops/s     7.1 MB/s
-run2 sqlite     readrandom      1000000 ops     5.322 s      5.322 us/op     187888 ops/s (1000000 found)
-run2 sqlite     readmissing     1000000 ops     4.908 s      4.908 us/op     203768 ops/s (0 found)
-run2 sqlite     readseq         1000000 ops     0.062 s      0.062 us/op   16016946 ops/s
-run2 sqlite     fillsync           1000 ops     0.923 s    922.703 us/op       1084 ops/s     0.1 MB/s
-run3 sediment   fillseq         1000000 ops     4.838 s      4.838 us/op     206701 ops/s    24.0 MB/s
-run3 sediment   fillrandom      1000000 ops     6.166 s      6.166 us/op     162172 ops/s    18.8 MB/s
-run3 sediment   overwrite       1000000 ops     7.410 s      7.410 us/op     134951 ops/s    15.7 MB/s
-run3 sediment   readrandom      1000000 ops     1.110 s      1.110 us/op     900729 ops/s (1000000 found)
-run3 sediment   readmissing     1000000 ops     0.295 s      0.295 us/op    3392450 ops/s (0 found)
-run3 sediment   readseq         1000000 ops     0.057 s      0.057 us/op   17692956 ops/s
-run3 sediment   fillsync           1000 ops     3.062 s   3061.807 us/op        327 ops/s     0.0 MB/s
-run3 leveldb    fillseq         1000000 ops     4.285 s      4.285 us/op     233363 ops/s    27.1 MB/s
-run3 leveldb    fillrandom      1000000 ops     5.775 s      5.775 us/op     173154 ops/s    20.1 MB/s
-run3 leveldb    overwrite       1000000 ops     6.766 s      6.766 us/op     147789 ops/s    17.1 MB/s
-run3 leveldb    readrandom      1000000 ops     1.116 s      1.116 us/op     895675 ops/s (1000000 found)
-run3 leveldb    readmissing     1000000 ops     0.558 s      0.558 us/op    1792842 ops/s (0 found)
-run3 leveldb    readseq         1000000 ops     0.029 s      0.029 us/op   34235243 ops/s
-run3 leveldb    fillsync           1000 ops     3.042 s   3041.854 us/op        329 ops/s     0.0 MB/s
-run3 sqlite     fillseq         1000000 ops    10.579 s     10.579 us/op      94530 ops/s    11.0 MB/s
-run3 sqlite     fillrandom      1000000 ops    19.895 s     19.895 us/op      50264 ops/s     5.8 MB/s
-run3 sqlite     overwrite       1000000 ops    16.208 s     16.208 us/op      61697 ops/s     7.2 MB/s
-run3 sqlite     readrandom      1000000 ops     4.881 s      4.881 us/op     204884 ops/s (1000000 found)
-run3 sqlite     readmissing     1000000 ops     4.705 s      4.705 us/op     212550 ops/s (0 found)
-run3 sqlite     readseq         1000000 ops     0.059 s      0.059 us/op   16829799 ops/s
-run3 sqlite     fillsync           1000 ops     0.374 s    373.568 us/op       2677 ops/s     0.3 MB/s
-run4 sediment   fillseq         1000000 ops     4.872 s      4.872 us/op     205271 ops/s    23.8 MB/s
-run4 sediment   fillrandom      1000000 ops     6.134 s      6.134 us/op     163020 ops/s    18.9 MB/s
-run4 sediment   overwrite       1000000 ops     7.222 s      7.222 us/op     138467 ops/s    16.1 MB/s
-run4 sediment   readrandom      1000000 ops     1.119 s      1.119 us/op     893588 ops/s (1000000 found)
-run4 sediment   readmissing     1000000 ops     0.297 s      0.297 us/op    3366921 ops/s (0 found)
-run4 sediment   readseq         1000000 ops     0.055 s      0.055 us/op   18080431 ops/s
-run4 sediment   fillsync           1000 ops     3.026 s   3025.770 us/op        330 ops/s     0.0 MB/s
-run4 leveldb    fillseq         1000000 ops     4.110 s      4.110 us/op     243321 ops/s    28.2 MB/s
-run4 leveldb    fillrandom      1000000 ops     5.712 s      5.712 us/op     175076 ops/s    20.3 MB/s
-run4 leveldb    overwrite       1000000 ops     6.637 s      6.637 us/op     150674 ops/s    17.5 MB/s
-run4 leveldb    readrandom      1000000 ops     1.106 s      1.106 us/op     904257 ops/s (1000000 found)
-run4 leveldb    readmissing     1000000 ops     0.555 s      0.555 us/op    1800679 ops/s (0 found)
-run4 leveldb    readseq         1000000 ops     0.029 s      0.029 us/op   34370610 ops/s
-run4 leveldb    fillsync           1000 ops     3.043 s   3043.002 us/op        329 ops/s     0.0 MB/s
-run4 sqlite     fillseq         1000000 ops    10.579 s     10.579 us/op      94524 ops/s    11.0 MB/s
-run4 sqlite     fillrandom      1000000 ops    20.046 s     20.046 us/op      49885 ops/s     5.8 MB/s
-run4 sqlite     overwrite       1000000 ops    16.133 s     16.133 us/op      61985 ops/s     7.2 MB/s
-run4 sqlite     readrandom      1000000 ops     4.674 s      4.674 us/op     213968 ops/s (1000000 found)
-run4 sqlite     readmissing     1000000 ops     4.888 s      4.888 us/op     204579 ops/s (0 found)
-run4 sqlite     readseq         1000000 ops     0.073 s      0.073 us/op   13624783 ops/s
-run4 sqlite     fillsync           1000 ops     0.732 s    732.486 us/op       1365 ops/s     0.2 MB/s
-run5 sediment   fillseq         1000000 ops     4.891 s      4.891 us/op     204449 ops/s    23.7 MB/s
-run5 sediment   fillrandom      1000000 ops     6.177 s      6.177 us/op     161892 ops/s    18.8 MB/s
-run5 sediment   overwrite       1000000 ops     7.132 s      7.132 us/op     140211 ops/s    16.3 MB/s
-run5 sediment   readrandom      1000000 ops     1.113 s      1.113 us/op     898292 ops/s (1000000 found)
-run5 sediment   readmissing     1000000 ops     0.298 s      0.298 us/op    3350685 ops/s (0 found)
-run5 sediment   readseq         1000000 ops     0.056 s      0.056 us/op   17746400 ops/s
-run5 sediment   fillsync           1000 ops     3.076 s   3076.025 us/op        325 ops/s     0.0 MB/s
-run5 leveldb    fillseq         1000000 ops     4.130 s      4.130 us/op     242125 ops/s    28.1 MB/s
-run5 leveldb    fillrandom      1000000 ops     5.769 s      5.769 us/op     173328 ops/s    20.1 MB/s
-run5 leveldb    overwrite       1000000 ops     6.674 s      6.674 us/op     149836 ops/s    17.4 MB/s
-run5 leveldb    readrandom      1000000 ops     1.125 s      1.125 us/op     888730 ops/s (1000000 found)
-run5 leveldb    readmissing     1000000 ops     0.551 s      0.551 us/op    1814271 ops/s (0 found)
-run5 leveldb    readseq         1000000 ops     0.029 s      0.029 us/op   34205722 ops/s
-run5 leveldb    fillsync           1000 ops     3.039 s   3038.652 us/op        329 ops/s     0.0 MB/s
-run5 sqlite     fillseq         1000000 ops    10.662 s     10.662 us/op      93792 ops/s    10.9 MB/s
-run5 sqlite     fillrandom      1000000 ops    19.561 s     19.561 us/op      51122 ops/s     5.9 MB/s
-run5 sqlite     overwrite       1000000 ops    15.653 s     15.653 us/op      63886 ops/s     7.4 MB/s
-run5 sqlite     readrandom      1000000 ops     4.585 s      4.585 us/op     218107 ops/s (1000000 found)
-run5 sqlite     readmissing     1000000 ops     4.456 s      4.456 us/op     224410 ops/s (0 found)
-run5 sqlite     readseq         1000000 ops     0.058 s      0.058 us/op   17182118 ops/s
-run5 sqlite     fillsync           1000 ops     0.862 s    862.008 us/op       1160 ops/s     0.1 MB/s
+run1 sediment   fillseq         1000000 ops     4.866 s      4.866 us/op     205514 ops/s    23.8 MB/s
+run1 sediment   fillrandom      1000000 ops     6.061 s      6.061 us/op     164983 ops/s    19.1 MB/s
+run1 sediment   overwrite       1000000 ops     7.067 s      7.067 us/op     141504 ops/s    16.4 MB/s
+run1 sediment   readrandom      1000000 ops     1.104 s      1.104 us/op     905732 ops/s (1000000 found)
+run1 sediment   readmissing     1000000 ops     0.289 s      0.289 us/op    3455743 ops/s (0 found)
+run1 sediment   readseq         1000000 ops     0.058 s      0.058 us/op   17383570 ops/s
+run1 sediment   fillsync           1000 ops     3.066 s   3065.815 us/op        326 ops/s     0.0 MB/s
+run1 leveldb    fillseq         1000000 ops     4.067 s      4.067 us/op     245885 ops/s    28.5 MB/s
+run1 leveldb    fillrandom      1000000 ops     5.736 s      5.736 us/op     174336 ops/s    20.2 MB/s
+run1 leveldb    overwrite       1000000 ops     6.685 s      6.685 us/op     149585 ops/s    17.4 MB/s
+run1 leveldb    readrandom      1000000 ops     1.135 s      1.135 us/op     881441 ops/s (1000000 found)
+run1 leveldb    readmissing     1000000 ops     0.572 s      0.572 us/op    1748029 ops/s (0 found)
+run1 leveldb    readseq         1000000 ops     0.030 s      0.030 us/op   33520256 ops/s
+run1 leveldb    fillsync           1000 ops     3.037 s   3036.609 us/op        329 ops/s     0.0 MB/s
+run1 sqlite     fillseq         1000000 ops    10.640 s     10.640 us/op      93989 ops/s    10.9 MB/s
+run1 sqlite     fillrandom      1000000 ops    19.844 s     19.844 us/op      50394 ops/s     5.8 MB/s
+run1 sqlite     overwrite       1000000 ops    16.013 s     16.013 us/op      62449 ops/s     7.2 MB/s
+run1 sqlite     readrandom      1000000 ops     4.726 s      4.726 us/op     211613 ops/s (1000000 found)
+run1 sqlite     readmissing     1000000 ops     4.614 s      4.614 us/op     216718 ops/s (0 found)
+run1 sqlite     readseq         1000000 ops     0.061 s      0.061 us/op   16473831 ops/s
+run1 sqlite     fillsync           1000 ops     0.782 s    781.982 us/op       1279 ops/s     0.1 MB/s
+run2 sediment   fillseq         1000000 ops     4.959 s      4.959 us/op     201650 ops/s    23.4 MB/s
+run2 sediment   fillrandom      1000000 ops     6.055 s      6.055 us/op     165148 ops/s    19.2 MB/s
+run2 sediment   overwrite       1000000 ops     7.319 s      7.319 us/op     136630 ops/s    15.8 MB/s
+run2 sediment   readrandom      1000000 ops     1.108 s      1.108 us/op     902289 ops/s (1000000 found)
+run2 sediment   readmissing     1000000 ops     0.292 s      0.292 us/op    3420146 ops/s (0 found)
+run2 sediment   readseq         1000000 ops     0.059 s      0.059 us/op   16843973 ops/s
+run2 sediment   fillsync           1000 ops     3.046 s   3045.669 us/op        328 ops/s     0.0 MB/s
+run2 leveldb    fillseq         1000000 ops     4.142 s      4.142 us/op     241408 ops/s    28.0 MB/s
+run2 leveldb    fillrandom      1000000 ops     5.667 s      5.667 us/op     176462 ops/s    20.5 MB/s
+run2 leveldb    overwrite       1000000 ops     6.631 s      6.631 us/op     150802 ops/s    17.5 MB/s
+run2 leveldb    readrandom      1000000 ops     1.104 s      1.104 us/op     906083 ops/s (1000000 found)
+run2 leveldb    readmissing     1000000 ops     0.565 s      0.565 us/op    1768801 ops/s (0 found)
+run2 leveldb    readseq         1000000 ops     0.029 s      0.029 us/op   34049412 ops/s
+run2 leveldb    fillsync           1000 ops     3.084 s   3083.532 us/op        324 ops/s     0.0 MB/s
+run2 sqlite     fillseq         1000000 ops    10.576 s     10.576 us/op      94553 ops/s    11.0 MB/s
+run2 sqlite     fillrandom      1000000 ops    19.926 s     19.926 us/op      50185 ops/s     5.8 MB/s
+run2 sqlite     overwrite       1000000 ops    15.914 s     15.914 us/op      62838 ops/s     7.3 MB/s
+run2 sqlite     readrandom      1000000 ops     4.725 s      4.725 us/op     211655 ops/s (1000000 found)
+run2 sqlite     readmissing     1000000 ops     4.690 s      4.690 us/op     213234 ops/s (0 found)
+run2 sqlite     readseq         1000000 ops     0.060 s      0.060 us/op   16716957 ops/s
+run2 sqlite     fillsync           1000 ops     0.685 s    684.512 us/op       1461 ops/s     0.2 MB/s
+run3 sediment   fillseq         1000000 ops     4.878 s      4.878 us/op     205001 ops/s    23.8 MB/s
+run3 sediment   fillrandom      1000000 ops     5.991 s      5.991 us/op     166928 ops/s    19.4 MB/s
+run3 sediment   overwrite       1000000 ops     7.062 s      7.062 us/op     141598 ops/s    16.4 MB/s
+run3 sediment   readrandom      1000000 ops     1.109 s      1.109 us/op     901734 ops/s (1000000 found)
+run3 sediment   readmissing     1000000 ops     0.293 s      0.293 us/op    3418631 ops/s (0 found)
+run3 sediment   readseq         1000000 ops     0.057 s      0.057 us/op   17537437 ops/s
+run3 sediment   fillsync           1000 ops     3.085 s   3084.664 us/op        324 ops/s     0.0 MB/s
+run3 leveldb    fillseq         1000000 ops     4.138 s      4.138 us/op     241677 ops/s    28.0 MB/s
+run3 leveldb    fillrandom      1000000 ops     5.585 s      5.585 us/op     179054 ops/s    20.8 MB/s
+run3 leveldb    overwrite       1000000 ops     6.649 s      6.649 us/op     150400 ops/s    17.4 MB/s
+run3 leveldb    readrandom      1000000 ops     1.044 s      1.044 us/op     958192 ops/s (1000000 found)
+run3 leveldb    readmissing     1000000 ops     0.539 s      0.539 us/op    1853651 ops/s (0 found)
+run3 leveldb    readseq         1000000 ops     0.030 s      0.030 us/op   33250439 ops/s
+run3 leveldb    fillsync           1000 ops     3.030 s   3029.699 us/op        330 ops/s     0.0 MB/s
+run3 sqlite     fillseq         1000000 ops    10.361 s     10.361 us/op      96518 ops/s    11.2 MB/s
+run3 sqlite     fillrandom      1000000 ops    20.011 s     20.011 us/op      49971 ops/s     5.8 MB/s
+run3 sqlite     overwrite       1000000 ops    15.694 s     15.694 us/op      63720 ops/s     7.4 MB/s
+run3 sqlite     readrandom      1000000 ops     4.643 s      4.643 us/op     215375 ops/s (1000000 found)
+run3 sqlite     readmissing     1000000 ops     4.656 s      4.656 us/op     214769 ops/s (0 found)
+run3 sqlite     readseq         1000000 ops     0.057 s      0.057 us/op   17582559 ops/s
+run3 sqlite     fillsync           1000 ops     0.543 s    542.771 us/op       1842 ops/s     0.2 MB/s
+run4 sediment   fillseq         1000000 ops     4.850 s      4.850 us/op     206205 ops/s    23.9 MB/s
+run4 sediment   fillrandom      1000000 ops     6.099 s      6.099 us/op     163948 ops/s    19.0 MB/s
+run4 sediment   overwrite       1000000 ops     7.042 s      7.042 us/op     142003 ops/s    16.5 MB/s
+run4 sediment   readrandom      1000000 ops     1.072 s      1.072 us/op     932961 ops/s (1000000 found)
+run4 sediment   readmissing     1000000 ops     0.286 s      0.286 us/op    3493450 ops/s (0 found)
+run4 sediment   readseq         1000000 ops     0.056 s      0.056 us/op   17885462 ops/s
+run4 sediment   fillsync           1000 ops     3.139 s   3139.413 us/op        319 ops/s     0.0 MB/s
+run4 leveldb    fillseq         1000000 ops     4.216 s      4.216 us/op     237197 ops/s    27.5 MB/s
+run4 leveldb    fillrandom      1000000 ops     5.727 s      5.727 us/op     174626 ops/s    20.3 MB/s
+run4 leveldb    overwrite       1000000 ops     6.840 s      6.840 us/op     146190 ops/s    17.0 MB/s
+run4 leveldb    readrandom      1000000 ops     1.047 s      1.047 us/op     954730 ops/s (1000000 found)
+run4 leveldb    readmissing     1000000 ops     0.545 s      0.545 us/op    1833228 ops/s (0 found)
+run4 leveldb    readseq         1000000 ops     0.029 s      0.029 us/op   34338743 ops/s
+run4 leveldb    fillsync           1000 ops     3.124 s   3123.820 us/op        320 ops/s     0.0 MB/s
+run4 sqlite     fillseq         1000000 ops    10.959 s     10.959 us/op      91253 ops/s    10.6 MB/s
+run4 sqlite     fillrandom      1000000 ops    19.942 s     19.942 us/op      50144 ops/s     5.8 MB/s
+run4 sqlite     overwrite       1000000 ops    15.302 s     15.302 us/op      65353 ops/s     7.6 MB/s
+run4 sqlite     readrandom      1000000 ops     4.335 s      4.335 us/op     230676 ops/s (1000000 found)
+run4 sqlite     readmissing     1000000 ops     4.466 s      4.466 us/op     223938 ops/s (0 found)
+run4 sqlite     readseq         1000000 ops     0.061 s      0.061 us/op   16324421 ops/s
+run4 sqlite     fillsync           1000 ops     0.647 s    646.686 us/op       1546 ops/s     0.2 MB/s
+run5 sediment   fillseq         1000000 ops     4.825 s      4.825 us/op     207245 ops/s    24.0 MB/s
+run5 sediment   fillrandom      1000000 ops     5.908 s      5.908 us/op     169274 ops/s    19.6 MB/s
+run5 sediment   overwrite       1000000 ops     6.937 s      6.937 us/op     144157 ops/s    16.7 MB/s
+run5 sediment   readrandom      1000000 ops     1.052 s      1.052 us/op     950590 ops/s (1000000 found)
+run5 sediment   readmissing     1000000 ops     0.282 s      0.282 us/op    3549328 ops/s (0 found)
+run5 sediment   readseq         1000000 ops     0.056 s      0.056 us/op   17844476 ops/s
+run5 sediment   fillsync           1000 ops     3.042 s   3041.789 us/op        329 ops/s     0.0 MB/s
+run5 leveldb    fillseq         1000000 ops     4.111 s      4.111 us/op     243223 ops/s    28.2 MB/s
+run5 leveldb    fillrandom      1000000 ops     5.619 s      5.619 us/op     177975 ops/s    20.6 MB/s
+run5 leveldb    overwrite       1000000 ops     6.438 s      6.438 us/op     155331 ops/s    18.0 MB/s
+run5 leveldb    readrandom      1000000 ops     1.035 s      1.035 us/op     965854 ops/s (1000000 found)
+run5 leveldb    readmissing     1000000 ops     0.527 s      0.527 us/op    1896060 ops/s (0 found)
+run5 leveldb    readseq         1000000 ops     0.029 s      0.029 us/op   33962825 ops/s
+run5 leveldb    fillsync           1000 ops     3.275 s   3274.823 us/op        305 ops/s     0.0 MB/s
+run5 sqlite     fillseq         1000000 ops    10.221 s     10.221 us/op      97834 ops/s    11.3 MB/s
+run5 sqlite     fillrandom      1000000 ops    19.090 s     19.090 us/op      52383 ops/s     6.1 MB/s
+run5 sqlite     overwrite       1000000 ops    15.071 s     15.071 us/op      66351 ops/s     7.7 MB/s
+run5 sqlite     readrandom      1000000 ops     4.347 s      4.347 us/op     230064 ops/s (1000000 found)
+run5 sqlite     readmissing     1000000 ops     4.295 s      4.295 us/op     232809 ops/s (0 found)
+run5 sqlite     readseq         1000000 ops     0.056 s      0.056 us/op   17942584 ops/s
+run5 sqlite     fillsync           1000 ops     0.584 s    583.910 us/op       1713 ops/s     0.2 MB/s
