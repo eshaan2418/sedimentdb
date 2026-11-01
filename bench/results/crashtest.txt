@@ -1,0 +1,32 @@
+# ./build/sediment-crashtest --rounds 30 (2026-11-01 06:52, Apple M5 Pro)
+round  1: killed after  104 acked sync writes,   225 keys, files L0/L1/L2 = 2/0/0, missing=0
+round  2: killed after   69 acked sync writes,   373 keys, files L0/L1/L2 = 4/0/0, missing=0
+round  3: killed after  101 acked sync writes,   594 keys, files L0/L1/L2 = 2/3/0, missing=0
+round  4: killed after  116 acked sync writes,   845 keys, files L0/L1/L2 = 5/3/0, missing=0
+round  5: killed after   32 acked sync writes,   912 keys, files L0/L1/L2 = 1/4/3, missing=0
+round  6: killed after   54 acked sync writes,  1024 keys, files L0/L1/L2 = 2/4/3, missing=0
+round  7: killed after   46 acked sync writes,  1123 keys, files L0/L1/L2 = 3/4/3, missing=0
+round  8: killed after   62 acked sync writes,  1258 keys, files L0/L1/L2 = 5/4/3, missing=0
+round  9: killed after   14 acked sync writes,  1289 keys, files L0/L1/L2 = 1/7/4, missing=0
+round 10: killed after   26 acked sync writes,  1343 keys, files L0/L1/L2 = 2/4/7, missing=0
+round 11: killed after   83 acked sync writes,  1517 keys, files L0/L1/L2 = 4/4/7, missing=0
+round 12: killed after   24 acked sync writes,  1568 keys, files L0/L1/L2 = 1/4/9, missing=0
+round 13: killed after  116 acked sync writes,  1816 keys, files L0/L1/L2 = 4/4/9, missing=0
+round 14: killed after  120 acked sync writes,  2074 keys, files L0/L1/L2 = 3/4/11, missing=0
+round 15: killed after   88 acked sync writes,  2268 keys, files L0/L1/L2 = 1/7/11, missing=0
+round 16: killed after  117 acked sync writes,  2519 keys, files L0/L1/L2 = 4/4/14, missing=0
+round 17: killed after   91 acked sync writes,  2716 keys, files L0/L1/L2 = 2/4/17, missing=0
+round 18: killed after   22 acked sync writes,  2763 keys, files L0/L1/L2 = 3/4/17, missing=0
+round 19: killed after   26 acked sync writes,  2822 keys, files L0/L1/L2 = 4/4/17, missing=0
+round 20: killed after   87 acked sync writes,  3005 keys, files L0/L1/L2 = 2/4/19, missing=0
+round 21: killed after   90 acked sync writes,  3190 keys, files L0/L1/L2 = 4/4/19, missing=0
+round 22: killed after   84 acked sync writes,  3361 keys, files L0/L1/L2 = 2/4/23, missing=0
+round 23: killed after   77 acked sync writes,  3521 keys, files L0/L1/L2 = 4/4/23, missing=0
+round 24: killed after   49 acked sync writes,  3622 keys, files L0/L1/L2 = 1/4/25, missing=0
+round 25: killed after   94 acked sync writes,  3815 keys, files L0/L1/L2 = 3/4/25, missing=0
+round 26: killed after   21 acked sync writes,  3861 keys, files L0/L1/L2 = 4/4/25, missing=0
+round 27: killed after   70 acked sync writes,  4007 keys, files L0/L1/L2 = 2/4/28, missing=0
+round 28: killed after   57 acked sync writes,  4127 keys, files L0/L1/L2 = 3/4/28, missing=0
+round 29: killed after   82 acked sync writes,  4299 keys, files L0/L1/L2 = 1/7/28, missing=0
+round 30: killed after   47 acked sync writes,  4395 keys, files L0/L1/L2 = 2/4/31, missing=0
+PASS: 30 crash/recover rounds, 2069 acknowledged writes verified
