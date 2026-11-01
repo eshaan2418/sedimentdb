@@ -43,7 +43,15 @@ char* Arena::AllocateAligned(size_t n) {
     left_ -= n + slop;
     return r;
   }
-  return Allocate(n);  // new blocks from operator new[] are suitably aligned
+  // Not enough room for the padding plus n: start a fresh block (blocks from
+  // operator new[] are suitably aligned). Falling back to Allocate(n) here
+  // could return the current, unaligned pointer.
+  if (n > kBlockSize / 4) return NewBlock(n);
+  ptr_ = NewBlock(kBlockSize);
+  left_ = kBlockSize - n;
+  char* r = ptr_;
+  ptr_ += n;
+  return r;
 }
 
 // ---------------------------------------------------------------------------

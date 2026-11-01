@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <unistd.h>
 
+#include <cstddef>
+
 #include "coding.h"
 #include "dbformat.h"
 #include "log.h"
@@ -46,6 +48,17 @@ TEST(Format, InternalKeyOrdering) {
   EXPECT_EQ(ExtractUserKey(a5), "a");
   EXPECT_EQ(ExtractSeq(a5), 5u);
   EXPECT_EQ(ExtractType(MakeInternalKey("x", 3, kTypeDeletion)), kTypeDeletion);
+}
+
+TEST(Arena, AlignedAllocationsAreAlignedAtBlockBoundaries) {
+  // Regression: when the current block had room for n but not for the
+  // alignment padding, AllocateAligned returned an unaligned pointer.
+  Arena a;
+  for (int i = 0; i < 20000; ++i) {
+    a.Allocate(1 + static_cast<size_t>(i % 13));  // knock the cursor off alignment
+    char* p = a.AllocateAligned(8 + static_cast<size_t>(i % 120));
+    ASSERT_EQ(reinterpret_cast<uintptr_t>(p) % alignof(std::max_align_t), 0u) << i;
+  }
 }
 
 TEST(MemTable, GetSeesNewestVisibleVersion) {
