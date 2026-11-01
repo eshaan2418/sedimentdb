@@ -22,8 +22,7 @@ class Iterator {
   [[nodiscard]] virtual Status status() const { return Status::OK(); }
 };
 
-// Merges sorted children by internal key (a binary heap would pay off only
-// for many children; we have memtables + L0 files + one per level).
+// Merges sorted children by internal key (binary min-heap).
 std::unique_ptr<Iterator> NewMergingIterator(std::vector<std::unique_ptr<Iterator>> children);
 
 std::unique_ptr<Iterator> NewEmptyIterator(Status s = Status::OK());

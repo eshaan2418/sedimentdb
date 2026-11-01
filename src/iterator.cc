@@ -21,25 +21,32 @@ class EmptyIterator final : public Iterator {
   Status s_;
 };
 
+// k-way merge with a binary min-heap: each Next() costs O(log k) key
+// comparisons instead of comparing every child.
 class MergingIterator final : public Iterator {
  public:
   explicit MergingIterator(std::vector<std::unique_ptr<Iterator>> c) : children_(std::move(c)) {}
 
-  [[nodiscard]] bool Valid() const override { return current_ != nullptr; }
+  [[nodiscard]] bool Valid() const override { return !heap_.empty(); }
   void SeekToFirst() override {
     for (auto& c : children_) c->SeekToFirst();
-    FindSmallest();
+    Rebuild();
   }
   void Seek(std::string_view t) override {
     for (auto& c : children_) c->Seek(t);
-    FindSmallest();
+    Rebuild();
   }
   void Next() override {
-    current_->Next();
-    FindSmallest();
+    Iterator* top = heap_.front();
+    top->Next();
+    if (!top->Valid()) {
+      heap_.front() = heap_.back();
+      heap_.pop_back();
+    }
+    if (!heap_.empty()) SiftDown(0);
   }
-  [[nodiscard]] std::string_view key() const override { return current_->key(); }
-  [[nodiscard]] std::string_view value() const override { return current_->value(); }
+  [[nodiscard]] std::string_view key() const override { return heap_.front()->key(); }
+  [[nodiscard]] std::string_view value() const override { return heap_.front()->value(); }
   [[nodiscard]] Status status() const override {
     for (const auto& c : children_) {
       if (Status s = c->status(); !s.ok()) return s;
@@ -48,14 +55,30 @@ class MergingIterator final : public Iterator {
   }
 
  private:
-  void FindSmallest() {
-    current_ = nullptr;
+  static bool Less(Iterator* a, Iterator* b) { return CompareInternal(a->key(), b->key()) < 0; }
+
+  void Rebuild() {
+    heap_.clear();
     for (auto& c : children_) {
-      if (c->Valid() && (current_ == nullptr || CompareInternal(c->key(), current_->key()) < 0)) current_ = c.get();
+      if (c->Valid()) heap_.push_back(c.get());
+    }
+    for (size_t i = heap_.size() / 2; i-- > 0;) SiftDown(i);
+  }
+
+  void SiftDown(size_t i) {
+    const size_t n = heap_.size();
+    for (;;) {
+      size_t l = 2 * i + 1, best = i;
+      if (l < n && Less(heap_[l], heap_[best])) best = l;
+      if (l + 1 < n && Less(heap_[l + 1], heap_[best])) best = l + 1;
+      if (best == i) return;
+      std::swap(heap_[i], heap_[best]);
+      i = best;
     }
   }
+
   std::vector<std::unique_ptr<Iterator>> children_;
-  Iterator* current_ = nullptr;
+  std::vector<Iterator*> heap_;
 };
 
 }  // namespace

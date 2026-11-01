@@ -81,46 +81,50 @@ class LevelIterator final : public Iterator {
 };
 
 // Turns an internal-key stream into user-visible entries as of `seq`.
+// key() and value() are views into the underlying iterator, valid until the
+// next call that moves it; only the key being skipped is copied.
 class DBIter final : public DBIterator {
  public:
   DBIter(std::unique_ptr<Iterator> it, SequenceNumber seq, std::vector<std::shared_ptr<const void>> pins)
       : it_(std::move(it)), seq_(seq), pins_(std::move(pins)) {}
 
   [[nodiscard]] bool Valid() const override { return valid_; }
-  [[nodiscard]] std::string_view key() const override { return key_; }
-  [[nodiscard]] std::string_view value() const override { return value_; }
+  [[nodiscard]] std::string_view key() const override { return ExtractUserKey(it_->key()); }
+  [[nodiscard]] std::string_view value() const override { return it_->value(); }
   [[nodiscard]] Status status() const override { return it_->status(); }
 
   void SeekToFirst() override {
     it_->SeekToFirst();
-    FindNextVisible(false, {});
+    FindNextVisible(false);
   }
   void Seek(std::string_view k) override {
     it_->Seek(LookupKey(k, seq_));
-    FindNextVisible(false, {});
+    FindNextVisible(false);
   }
-  void Next() override { FindNextVisible(true, key_); }
+  void Next() override {
+    skip_.assign(key());
+    it_->Next();
+    FindNextVisible(true);
+  }
 
  private:
   // Moves to the newest visible, non-deleted version of the next user key,
-  // first passing over remaining entries for `skip` if `skipping`.
-  void FindNextVisible(bool skipping, std::string skip) {
+  // first passing over remaining entries for skip_ if `skipping`.
+  void FindNextVisible(bool skipping) {
     valid_ = false;
     while (it_->Valid()) {
       std::string_view ik = it_->key();
       std::string_view uk = ExtractUserKey(ik);
-      if (ExtractSeq(ik) > seq_ || (skipping && uk == skip)) {
+      if (ExtractSeq(ik) > seq_ || (skipping && uk == skip_)) {
         it_->Next();
         continue;
       }
       if (ExtractType(ik) == kTypeDeletion) {
-        skip.assign(uk);
+        skip_.assign(uk);
         skipping = true;
         it_->Next();
         continue;
       }
-      key_.assign(uk);
-      value_.assign(it_->value());
       valid_ = true;
       return;
     }
@@ -129,7 +133,7 @@ class DBIter final : public DBIterator {
   std::unique_ptr<Iterator> it_;
   SequenceNumber seq_;
   std::vector<std::shared_ptr<const void>> pins_;  // memtables and version
-  std::string key_, value_;
+  std::string skip_;
   bool valid_ = false;
 };
 
