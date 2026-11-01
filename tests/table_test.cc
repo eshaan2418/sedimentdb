@@ -1,6 +1,7 @@
 #include "table.h"
 
 #include <gtest/gtest.h>
+#include <unistd.h>
 
 #include <cstdio>
 #include <random>
@@ -56,7 +57,10 @@ TEST(Bloom, NoFalseNegativesAndLowFalsePositives) {
 
 class TableTest : public ::testing::Test {
  protected:
-  std::string path_ = ::testing::TempDir() + "/table_test.sst";
+  // Unique per test and process: ctest runs tests in parallel processes.
+  std::string path_ = ::testing::TempDir() + "/table_test_" +
+                      ::testing::UnitTest::GetInstance()->current_test_info()->name() + "_" +
+                      std::to_string(::getpid()) + ".sst";
   void Build(int n) {
     std::unique_ptr<WritableFile> f;
     ASSERT_TRUE(WritableFile::Open(path_, &f).ok());

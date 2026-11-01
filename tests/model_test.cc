@@ -3,6 +3,7 @@
 // checked, including full scans at random snapshots.
 
 #include <gtest/gtest.h>
+#include <unistd.h>
 
 #include <map>
 #include <optional>
@@ -35,7 +36,8 @@ class ModelTest : public ::testing::TestWithParam<int> {};
 TEST_P(ModelTest, RandomOperationsMatchStdMap) {
   const int seed = GetParam();
   std::mt19937 rng(seed);
-  std::string path = ::testing::TempDir() + "/sediment_model_" + std::to_string(seed);
+  std::string path =
+      ::testing::TempDir() + "/sediment_model_" + std::to_string(seed) + "_" + std::to_string(::getpid());
   DestroyDB(path);
   Options o;
   o.write_buffer_size = 32 << 10;

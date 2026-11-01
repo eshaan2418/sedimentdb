@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <unistd.h>
 
 #include "coding.h"
 #include "dbformat.h"
@@ -99,7 +100,7 @@ TEST(WriteBatch, RoundTrip) {
 }
 
 TEST(Log, StopsAtTornOrCorruptTail) {
-  std::string path = ::testing::TempDir() + "/log_test.log";
+  std::string path = ::testing::TempDir() + "/log_test_" + std::to_string(::getpid()) + ".log";
   {
     std::unique_ptr<WritableFile> f;
     ASSERT_TRUE(WritableFile::Open(path, &f).ok());

@@ -1,6 +1,7 @@
 #include "sediment/db.h"
 
 #include <gtest/gtest.h>
+#include <unistd.h>
 
 #include <atomic>
 #include <cstdio>
@@ -20,8 +21,9 @@ std::string Key(int i) {
 
 class DBTest : public ::testing::Test {
  protected:
-  std::string path_ =
-      ::testing::TempDir() + "/sediment_db_test_" + ::testing::UnitTest::GetInstance()->current_test_info()->name();
+  std::string path_ = ::testing::TempDir() + "/sediment_db_test_" +
+                      ::testing::UnitTest::GetInstance()->current_test_info()->name() + "_" +
+                      std::to_string(::getpid());
   Options opts_;
   std::unique_ptr<DB> db_;
 
